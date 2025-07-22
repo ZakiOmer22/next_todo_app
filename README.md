@@ -1,4 +1,4 @@
-\# Flutter To-Do List App with Supabase
+# Flutter To-Do List App with Supabase
 
 
 
