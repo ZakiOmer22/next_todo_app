@@ -15,8 +15,10 @@ A mobile To-Do app built with Flutter and Supabase backend featuring:
 ## Screenshot
 
 ![App Screenshot](./assets/screenshot.png)  
-*Example screenshot of the app in action*
+*Dashboard Design I*
 
+![App Screenshot](./assets/screenshot_1.png)  
+*Dashboard Design II*
 ---
 
 ## Prerequisites
