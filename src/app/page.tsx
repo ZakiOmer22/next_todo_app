@@ -77,7 +77,7 @@ export default function HomePage() {
   useEffect(() => {
     if (!session) return;
     supabase
-      .from<Task>("tasks")
+      .from<"tasks", Task>("tasks")
       .select("*")
       .order("order", { ascending: true })
       .then((res) => {
@@ -91,7 +91,7 @@ export default function HomePage() {
         { event: "*", schema: "public", table: "tasks" },
         () => {
           supabase
-            .from<Task>("tasks")
+            .from<"tasks", Task>("tasks")
             .select("*")
             .order("order", { ascending: true })
             .then((res) => {
@@ -248,7 +248,13 @@ export default function HomePage() {
   }
 
   return (
-    <div className={`min-h-screen p-6 ${theme === "light" ? "bg-white text-black" : "bg-gradient-to-br from-purple-900 via-black to-black text-white"}`}>
+    <div
+      className={`min-h-screen p-6 ${
+        theme === "light"
+          ? "bg-white text-black"
+          : "bg-gradient-to-br from-purple-900 via-black to-black text-white"
+      }`}
+    >
       <div className="flex justify-between items-center mb-4 flex-wrap gap-2">
         <h1 className="text-3xl font-bold">Task List</h1>
         <div className="flex items-center space-x-3">
@@ -324,7 +330,9 @@ export default function HomePage() {
             <Input
               placeholder="Description"
               value={form.description}
-              onChange={(e) => setForm({ ...form, description: e.target.value })}
+              onChange={(e) =>
+                setForm({ ...form, description: e.target.value })
+              }
             />
             <Input
               type="date"
