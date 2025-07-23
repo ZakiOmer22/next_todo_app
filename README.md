@@ -35,8 +35,8 @@ A mobile To-Do app built with Flutter and Supabase backend featuring:
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/yourusername/flutter_todo_supabase.git
-   cd flutter_todo_supabase
+   git clone https://github.com/ZakiOmer22/next_todo_app.git
+   cd next_todo_app
    
 2. **Install dependencies**
 
