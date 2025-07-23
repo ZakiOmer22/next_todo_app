@@ -141,4 +141,4 @@ MIT © \[Zaki Omer]
 ## Contact
 
 Got feedback or suggestions?
-📧 [your.zakiomer@zamufey.com](mailto:your.zakiomer@zamufey.com)
+📧 [zakiomer@zamufey.com](mailto:zakiomer@zamufey.com)
