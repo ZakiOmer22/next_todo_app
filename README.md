@@ -1,113 +1,144 @@
-# Flutter To-Do List App with Supabase
+# Web To-Do List App with Supabase
 
-A mobile To-Do app built with Flutter and Supabase backend featuring:
+A responsive and aesthetic web-based To-Do list application built with Next.js 14, Supabase, and shadcn/ui. The app supports:
 
-- User authentication (Sign up / Sign in)
-- Add, edit, delete tasks
-- Drag & drop task reordering
-- Dark mode toggle
-- Search and sort tasks
-- Export tasks to PDF and CSV
-- Real-time sync with Supabase
+* 🌗 Dark / Light Mode toggle
+* ✅ Task creation, deletion, and drag & drop reordering
+* 🔍 Search, filter, and priority-based sorting
+* 🧾 Export to PDF / CSV
+* 🔄 Real-time updates via Supabase Realtime Channels
+* 🔐 Supabase Auth (Sign Up / Sign In)
+* 📱 Fully responsive (mobile/tablet/desktop)
 
 ---
 
 ## Screenshot
 
-![App Screenshot](./assets/screenshot.png)  
-*Dashboard Design I*
+![Web Screenshot 1](./assets/screenshot.png)
+*Dashboard with dark mode and draggable cards*
 
-![App Screenshot](./assets/screenshot_1.png)  
-*Dashboard Design II*
+![Web Screenshot 2](./assets/screenshot_1.png)
+*Task creation modal + light mode UI*
+
 ---
 
 ## Prerequisites
 
-- Flutter SDK (version 3.0.0 or higher)  
-  Install from: [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
-- Android Studio or Xcode (for running on Android/iOS devices or emulators)
-- Supabase account and project with configured `tasks` table
+* Node.js v18 or higher
+* Supabase account and project
+* Git
+
+---
+
+## Tech Stack
+
+* **Frontend:** Next.js App Router, React, TailwindCSS, shadcn/ui
+* **Backend:** Supabase (Auth + Realtime + Database)
+* **PDF/CSV Export:** jsPDF, react-csv
+* **Drag and Drop:** dnd-kit
 
 ---
 
 ## Installation & Setup
 
-1. **Clone the repository**
+1. **Clone the repo**
 
    ```bash
-   git clone https://github.com/ZakiOmer22/next_todo_app.git
+   git clone https://github.com/yourusername/next_todo_app.git
    cd next_todo_app
-   
+   ```
+
 2. **Install dependencies**
 
    ```bash
-   flutter pub get
+   npm install
    ```
 
-3. **Configure Supabase**
+3. **Setup environment variables**
 
-   * Create a new project on [Supabase](https://supabase.com/)
-   * Set up a `tasks` table with the following columns:
+   Create a `.env.local` file and add:
 
-     * `id` (primary key)
-     * `title` (text)
-     * `description` (text, nullable)
-     * `date` (timestamp, nullable)
-     * `tags` (text array, nullable)
-     * `priority` (text)
-     * `order` (integer)
-     * `user_id` (UUID, foreign key)
-   * Copy your Supabase project URL and anon key
-   * Open `lib/main.dart` and replace the placeholder constants:
-
-   ```dart
-   const supabaseUrl = 'YOUR_SUPABASE_URL';
-   const supabaseAnonKey = 'YOUR_SUPABASE_ANON_KEY';
+   ```env
+   NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
+   NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
    ```
 
-4. **Run the app**
+4. **Supabase Configuration**
 
-   Connect your device or launch an emulator, then run:
+   * Go to [Supabase](https://supabase.com/), create a project.
 
-   ```bash
-   flutter run
-   ```
+   * Create a `tasks` table:
+
+     | Column      | Type    | Notes                       |
+     | ----------- | ------- | --------------------------- |
+     | id          | uuid    | Primary Key, default uuid() |
+     | title       | text    |                             |
+     | description | text    | Nullable                    |
+     | date        | date    | Nullable                    |
+     | tags        | text\[] | Nullable                    |
+     | priority    | text    | 'High', 'Medium', 'Low'     |
+     | order       | int     | Default 0                   |
+     | user\_id    | uuid    | Foreign key to auth.users   |
+
+   * Enable Row-Level Security and add the policy:
+
+     ```sql
+     alter policy "Enable users to view their own data only"
+     on "public"."tasks"
+     to authenticated
+     using (user_id = auth.uid());
+     ```
+
+---
+
+## Running Locally
+
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000)
 
 ---
 
 ## Features
 
-* **Authentication:** Sign up, log in, and persist sessions with Supabase.
-* **Task Management:** Add, edit, and reorder tasks via drag-and-drop.
+* 💡 Toggle between dark/light mode
+* 📦 Organize tasks with tags and priorities
+* 📅 Date-based task filtering
+* ↕️ Drag & drop to reorder tasks
+* 🔒 Authenticated routes (with Supabase)
+* 📄 Export tasks to CSV or print-ready PDF
+
+---
 
 ## Troubleshooting
 
-* **Icons not showing:**
-  Ensure your `pubspec.yaml` includes:
+* **Dark mode not applying to dropdowns:** Make sure `Select`, `Dialog`, and all shadcn components have `dark:bg-*` classes applied in both `trigger` and `content`.
+* **Insert errors (empty object):** Ensure RLS policy allows `insert` and `user_id = auth.uid()`.
+* **Realtime not syncing:** Confirm you’re using `.channel("tasks-updates")` and `supabase.channel().on().subscribe()` properly with correct table name.
 
-  ```yaml
-  flutter:
-    uses-material-design: true
-  ```
+---
 
-* **Android NDK version conflicts:**
-  If you see NDK version errors during build, edit your `android/app/build.gradle.kts` file to specify the highest NDK version:
+## Deployment
 
-  ```kotlin
-  android {
-      ndkVersion = "27.0.12077973"
-      ...
-  }
-  ```
+You can deploy this to:
+
+* [Vercel](https://vercel.com/) – auto-detects Next.js
+* [Netlify](https://netlify.com/)
+* [Render](https://render.com/)
+
+Just make sure to add your `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` as environment variables.
 
 ---
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT © \[Zaki Omer]
 
 ---
 
 ## Contact
 
-For questions or feedback, contact: \[[zakiomer@zamufey.com](mailto:your.zakiomer@zamufey.com)]
+Got feedback or suggestions?
+📧 [your.zakiomer@zamufey.com](mailto:your.zakiomer@zamufey.com)
